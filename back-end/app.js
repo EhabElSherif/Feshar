@@ -38,7 +38,7 @@ db().then(async () => {
  * GraphQL
  */
 const graphqlHTTP = require('express-graphql');
-const {schema} = require('./graphql/graphql-schema');
+const schema = require('./graphql/graphql-schema');
 app.use('/graphql', graphqlHTTP({
   schema,
   graphiql: true

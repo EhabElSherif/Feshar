@@ -22,7 +22,7 @@ const movieSchema = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Producer'
     }],
-    part: {
+    part: [{
         name: String,
         image_url: String,
         date: {
@@ -37,8 +37,8 @@ const movieSchema = new mongoose.Schema({
         },
         part_number: {
             type: Number,
+            required: true,
             default: 1,
-            require: true,
             validate: {
                 validator: (value) => {
                     return validator.isInt(value, {
@@ -48,7 +48,7 @@ const movieSchema = new mongoose.Schema({
                 message: "{VALUE} is not a valid season number!"
             }
         }
-    },
+    }],
     created_at: {
         type: String,
         required: true,
@@ -99,6 +99,29 @@ movieSchema.index({
 }, {
     unique: true
 });
+
+// movieSchema.pre('save', function (next) {
+//     let movie = this;
+
+//     console.log(movie);
+//     if (movie.genres) {
+//         let genres = [];
+//         movie.genres.forEach((genre, index) => {
+//             Genre.findOne(genre).then((genre) => {
+//                 if (genre) {
+//                     genres.push(genre._id);
+//                 } else {
+//                     next();
+//                 }
+//             });
+//         });
+//         movie.genres = genres;
+//         console.log(movie);
+//         next();
+//     } else {
+//         next();
+//     }
+// });
 
 let Model = mongoose.model('Movie', movieSchema);
 
