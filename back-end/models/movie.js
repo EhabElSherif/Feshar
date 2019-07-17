@@ -22,7 +22,7 @@ const movieSchema = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Producer'
     }],
-    part: [{
+    parts: [{
         name: String,
         image_url: String,
         date: {
@@ -99,29 +99,6 @@ movieSchema.index({
 }, {
     unique: true
 });
-
-// movieSchema.pre('save', function (next) {
-//     let movie = this;
-
-//     console.log(movie);
-//     if (movie.genres) {
-//         let genres = [];
-//         movie.genres.forEach((genre, index) => {
-//             Genre.findOne(genre).then((genre) => {
-//                 if (genre) {
-//                     genres.push(genre._id);
-//                 } else {
-//                     next();
-//                 }
-//             });
-//         });
-//         movie.genres = genres;
-//         console.log(movie);
-//         next();
-//     } else {
-//         next();
-//     }
-// });
 
 let Model = mongoose.model('Movie', movieSchema);
 

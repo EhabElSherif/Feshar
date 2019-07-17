@@ -16,7 +16,7 @@ type Movie {
     genres: [Genre]
     directors: [Person]
     producers: [Producer]
-    part: Part
+    parts: [Part]
     created_at: String
     cast: [Person]
     reviews: [Review]
@@ -62,9 +62,15 @@ type Part {
     part_number: Int
 }
 
-type Token {access: String, token: String}
+type Token {
+    access: String
+    token: String
+}
 
-type Name {first_name: String, last_name: String}
+type Name {
+    first_name: String
+    last_name: String
+}
 
 type User {
     username: String
@@ -79,11 +85,20 @@ type User {
 }
 
 # inputs
-input InputToken {access: String, token: String}
+input InputToken {
+    access: String
+    token: String
+}
 
-input InputName {first_name: String, last_name: String}
+input InputName {
+    first_name: String
+    last_name: String
+}
 
-input UserSelectProperties {username: String, email: String}
+input UserSelectProperties {
+    username: String
+    email: String
+}
 
 input InputGenre {
     name: String
@@ -138,10 +153,25 @@ input InputMovie {
     genres: [InputGenre]
     directors: [InputPerson]
     producers: [InputProducer]
-    part: InputPart
+    parts: [InputPart]
     created_at: String
     cast: [InputPerson]
     reviews: [InputReview]
+    description: String
+}
+
+input InputMovieArrays {
+    genres: [InputGenre]
+    directors: [InputPerson]
+    producers: [InputProducer]
+    parts: [InputPart]
+    cast: [InputPerson]
+    reviews: [InputReview]
+}
+
+input InputMovieEdit {
+    name: String
+    created_at: String
     description: String
 }
 
