@@ -26,7 +26,7 @@ type Movie {
 type Person {
     name: String
     gender: Gender
-    title: Title
+    title: [Title]
     image_url: String
     birth_date: String
     created_at: String
