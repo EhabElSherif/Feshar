@@ -66,8 +66,39 @@ const typeDefs = `
 
 const resolvers = {
   Query: {
-    persons: (_, args) => Person.find({name: new RegExp(args.name, 'i')}).populate('nationality'),
-    person: (_, args) => Person.findOne({name: args.name})
+    persons: (_, args) => {
+        return new Promise((resolve,reject)=>{
+            let NationalityObj = null;
+
+            // Name
+            if(args.name){
+                args.name = new RegExp(args.name, 'i');
+            }
+            // Description
+            if(args.description){
+                args.description = new RegExp(args.description,'i');
+            }
+            // Nationality
+            if(args.nationality){
+                Nationality.findOne({name:args.nationality.name},(err,res)=>{
+                    if(res){
+                        args.nationality = res._id;
+                    }else{
+                        delete args.nationality;
+                    }
+                });
+            }
+            console.log(args);
+            Person.find(args).populate('nationality').then((persons)=>{
+                resolve(persons);
+            }).catch((err)=>{
+                reject(err);
+            });
+        });
+    },
+    person: (_, args) => {
+        Person.findOne({name: args.name})
+    }
   },
 
   Mutation: {
@@ -101,7 +132,7 @@ const resolvers = {
         return PersonObject.exec();
     },
     deletePerson: (_, args) => {
-        return Person.findOneAndRemove({name: args.name}).exec();
+        return Person.findOneAndRemove(args).exec();
     }
   }
 };
